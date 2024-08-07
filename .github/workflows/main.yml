@@ -20,4 +20,4 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ssh -o StrictHostKeyChecking=no mpower@123.200.18.24 "/home/mpower/ansible-virtualenv/bin/ansible-playbook -i /home/mpower/ansible-virtualenv/inventory /home/mpower/msurvey-api/msurvey-front-dev.yml"
+          ssh -o StrictHostKeyChecking=no mpower@123.200.18.24 "/home/mpower/ansible-virtualenv/bin/ansible-playbook -i /home/mpower/cicd-openmrs-docker/hosts /home/mpower/cicd-openmrs-docker/cicd.yml"
