@@ -1,29 +1,23 @@
-name: Deploy
+name: SSH Deploy
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.6.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Debug SSH Setup
-      run: |
-        ls -al ~/.ssh
-        cat ~/.ssh/id_rsa
-
-    - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no username@hostname hostname
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Run Ansible Playbook
+        run: |
+          ssh -o StrictHostKeyChecking=no mpower@123.200.18.24 "/home/mpower/ansible-virtualenv/bin/ansible-playbook -i /home/mpower/ansible-virtualenv/inventory /home/mpower/msurvey-api/msurvey-front-dev.yml"
