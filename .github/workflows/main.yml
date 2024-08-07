@@ -18,5 +18,12 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Debug SSH Setup
+      run: |
+        ls -al ~/.ssh
+        cat ~/.ssh/id_rsa
+
     - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no mpower@123.200.18.24 123.200.18.24
+      run: ssh -o StrictHostKeyChecking=no username@hostname hostname
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
